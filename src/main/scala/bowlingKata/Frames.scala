@@ -1,10 +1,6 @@
 package bowlingKata
 
-class IllegalFrameNumberException(val num: Int) extends Exception(s"Frame Number($num) is more than 10")
-
-case class FrameNumber(val num: Int)  {
-  if (num > 10) throw new IllegalFrameNumberException(num)
-
+case class FrameNumber(val num: Int) {
   def next: FrameNumber = FrameNumber(num + 1)
 }
 
@@ -19,7 +15,7 @@ case class SimpleFrame(frameNumber: FrameNumber, first: Int, second: Int) extend
 }
 
 case class Strike(frameNumber: FrameNumber, bonus1: Int, bonus2: Int) extends Frame {
-  override def score: Int = 10+ bonus1 + bonus2
+  override def score: Int = 10 + bonus1 + bonus2
 }
 
 case class Spare(frameNumber: FrameNumber, first: Int, second: Int, bonus: Int) extends Frame {

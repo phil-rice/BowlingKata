@@ -17,9 +17,9 @@ object FrameData {
 
   def unfoldIntoFrames(fd: FrameData): Option[(Frame, FrameData)] = fd match {
     case FrameData(Nil, _) => None
-    case FrameData(_, FrameNumber(count)) if count > 10 => None
+    case FrameData(_, FrameNumber(count)) if count >= 10 => None
     case FrameData(a :: Nil, count) => throw new IllegalStateException("Cannot occur in a legal match: single ball left")
-    case fd@FrameData(10 :: bonus1 :: bonus2 :: _, frameNumber) => Some((Strike(frameNumber, bonus1, bonus2), fd.useUp(1)))
+     case fd@FrameData(10 :: bonus1 :: bonus2 :: _, frameNumber) => Some((Strike(frameNumber, bonus1, bonus2), fd.useUp(1)))
     case fd@FrameData(first :: second :: bonus :: _, frameNumber) if (first + second == 10) => Some((Spare(frameNumber, first, second, bonus), fd.useUp(2)))
     case fd@FrameData(first :: second :: _, frameNumber) => Some((SimpleFrame(frameNumber, first, second), fd.useUp(2)))
     case a => throw new IllegalStateException(s"Not sure what happened. Funny state: $a")
@@ -34,8 +34,9 @@ object Kata extends App {
 
   def game(list: List[Int]) = {
     val frames = FrameData.makeFrames(FrameData(list, new FrameNumber(0))).toList
-    println(frames)
+    frames.foreach(println)
     println("score is " + frames.map(_.score).sum)
+    println
   }
 
   game(List(1, 2, 6, 4, 10, 5, 6, 7, 3))

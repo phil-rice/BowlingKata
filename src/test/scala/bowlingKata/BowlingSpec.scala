@@ -11,10 +11,6 @@ class BowlingSpec extends FlatSpec with Matchers {
     FrameNumber(1).next shouldBe FrameNumber(2)
   }
 
-  it should "throw an exception if the FrameNumber is more than 10" in {
-    FrameNumber(10)
-    intercept[IllegalFrameNumberException](FrameNumber(11)).num shouldBe 11
-  }
 
   behavior of "SimpleFrame"
   it should "score" in {
@@ -69,5 +65,6 @@ class BowlingSpec extends FlatSpec with Matchers {
     FrameData.score(List(7, 3, 1, 2)) shouldBe 11 + 3
     FrameData.score(List(10, 3, 1, 2, 4)) shouldBe 14 + 4 + 6
     FrameData.score(List(7, 2, 5, 5, 3, 0, 10, 2, 4)) shouldBe 9 + 13 + 3 + 16 + 6
+    FrameData.score(List.fill(12)(10)) shouldBe 300 //maxScore
   }
 }
